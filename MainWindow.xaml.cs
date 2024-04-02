@@ -26,5 +26,6 @@ namespace RasstegaevLanguage
             MainFrame.Navigate(new LanguagePage());
             Manager.MainFrame = MainFrame;
         }
+
     }
 }
