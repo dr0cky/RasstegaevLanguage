@@ -73,5 +73,17 @@ namespace RasstegaevLanguage
             }
         }
 
+        public string GenderName
+        {
+            get
+            {
+                if (this.GenderCode == "0")
+                {
+                    return "Мужской";
+                }
+                else return "Женский";
+            }
+        }
+
     }
 }

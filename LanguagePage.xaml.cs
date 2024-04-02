@@ -34,9 +34,9 @@ namespace RasstegaevLanguage
             List<Client> currentClients = RasstegaevLanguageEntities.GetContext().Client.ToList();
 
             LanguageListView.ItemsSource = currentClients;
-            //FiltrBox.SelectedIndex = 0;
+            FiltrBox.SelectedIndex = 0;
             strCount.SelectedIndex = 0;
-            //SortBox.SelectedIndex = 0;
+            SortBox.SelectedIndex = 0;
             TBAllRecords.Text = RasstegaevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             Update();
         }
@@ -45,29 +45,29 @@ namespace RasstegaevLanguage
         {
             var currentClient = RasstegaevLanguageEntities.GetContext().Client.ToList();
 
-            //if (SortBox.SelectedIndex == 1)
-            //{
-            //    currentClient = currentClient.OrderBy(p => p.FirstName).ToList();
-            //}
-            //else if (SortBox.SelectedIndex == 2)
-            //{
-            //    currentClient = currentClient.OrderBy(p => DateTime.Parse(p.LastVisitDate)).ToList();
-            //}
-            ////else if (SortBox.SelectedIndex == 2)
-            ////{
-            ////    currentClient = currentClient.OrderBy(p => p.VisitCount).ToList();
-            ////}
+            if (SortBox.SelectedIndex == 1)
+            {
+                currentClient = currentClient.OrderBy(p => p.FirstName).ToList();
+            }
+            else if (SortBox.SelectedIndex == 2)
+            {
+                currentClient = currentClient.OrderByDescending(p => DateTime.TryParse(p.LastVisitDate, out DateTime visitDate) ? visitDate : DateTime.MinValue).ToList();
+            }
+            else if (SortBox.SelectedIndex == 3)
+            {
+                currentClient = currentClient.OrderByDescending(p => p.VisitCount).ToList();
+            }
 
-            ////if (FiltrBox.SelectedIndex == 1)
-            ////{
-            ////    currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
-            ////}
-            ////else if (FiltrBox.SelectedIndex == 2)
-            ////{
-            ////    currentClient = currentClient.Where(p => p.GenderCode == "м").ToList();
-            ////}
+            if (FiltrBox.SelectedIndex == 1)
+            {
+                currentClient = currentClient.Where(p => p.GenderCode == "1").ToList();
+            }
+            else if (FiltrBox.SelectedIndex == 2)
+            {
+                currentClient = currentClient.Where(p => p.GenderCode == "0").ToList();
+            }
 
-            //currentClient = currentClient.Where(p => p.LastName.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.FirstName.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Patronymic.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").ToLower().Contains(TBoxSearch.Text.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").ToLower())).ToList();
+            currentClient = currentClient.Where(p => p.LastName.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.FirstName.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Patronymic.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").ToLower().Contains(TBoxSearch.Text.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").ToLower())).ToList();
 
             TBAllRecords.Text = RasstegaevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             TBCount.Text = currentClient.Count().ToString();
